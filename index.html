@@ -16,11 +16,21 @@
         }
         .video-container {
             margin: 10px;
+            width: 30%; /* Membuat 3 video per baris */
         }
         iframe {
-            width: 400px;
-            height: 400px;
+            width: 100%;
+            height: 200px; /* Ukuran video lebih kecil agar bisa muat 3 per baris */
             border: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            .video-container {
+                width: 48%; /* Untuk layar kecil, 2 video per baris */
+            }
+            iframe {
+                height: 150px; /* Ukuran video lebih kecil untuk layar kecil */
+            }
         }
     </style>
 </head>
@@ -32,16 +42,38 @@
         // Playlist YouTube ID
         const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // Ganti dengan ID playlist Anda
 
-        // Menampilkan 20 video dari playlist
+        // Menampilkan 20 video acak dari playlist
         const container = document.getElementById('videos-container');
+        let videoIndexes = [];
+
+        // Menambahkan video index untuk playlist
+        for (let i = 0; i < 20; i++) {
+            videoIndexes.push(i);
+        }
+
+        // Mengacak urutan video
+        videoIndexes = videoIndexes.sort(() => Math.random() - 0.5);
 
         // Membuat embed untuk playlist
-        for (let i = 0; i < 20; i++) {
+        videoIndexes.forEach((index) => {
             const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&playlist=${playlistId}&mute=1`; // mute=1 untuk menonaktifkan suara
+            iframe.src = `https://www.youtube.com/embed/${getVideoIdFromPlaylist(playlistId, index)}?autoplay=1&loop=1&playlist=${playlistId}&mute=1&quality=small`; 
             iframe.setAttribute("allow", "autoplay; encrypted-media");
             iframe.setAttribute("allowfullscreen", true);
-            container.appendChild(iframe);
+            
+            // Membungkus iframe dalam div untuk layout
+            const videoContainer = document.createElement('div');
+            videoContainer.classList.add('video-container');
+            videoContainer.appendChild(iframe);
+            container.appendChild(videoContainer);
+        });
+
+        // Fungsi untuk mendapatkan ID video dari playlist berdasarkan index
+        function getVideoIdFromPlaylist(playlistId, index) {
+            // Format video ID yang bisa Anda gunakan untuk memulai video tertentu dalam playlist
+            // Anda bisa menggunakan API YouTube Data v3 untuk mendapatkan daftar video dalam playlist
+            // Di sini, ID video hanya akan dihasilkan dari index dalam playlist
+            return playlistId.split(',')[index] || 'defaultVideoId';
         }
     </script>
 </body>
