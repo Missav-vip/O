@@ -21,7 +21,7 @@
         }
         iframe {
             width: 100%;
-            height: 60px;
+            height: 60px; /* Ukuran video 40x60 atau 30x50 disesuaikan dengan ukuran ini */
             border: none;
             display: block;
         }
@@ -31,7 +31,7 @@
                 width: 48%;
             }
             iframe {
-                height: 50px;
+                height: 50px; /* Menyesuaikan untuk perangkat lebih kecil */
             }
         }
 
@@ -40,7 +40,7 @@
                 width: 100%;
             }
             iframe {
-                height: 40px;
+                height: 40px; /* Menyesuaikan untuk layar sangat kecil */
             }
         }
     </style>
@@ -49,11 +49,12 @@
     <div id="videos-container"></div>
 
     <script>
-        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0';
+        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // ID Playlist Anda
         const container = document.getElementById('videos-container');
         let videoIndexes = [];
 
-        for (let i = 0; i < 200; i++) {
+        // Menampilkan 20 video secara acak
+        for (let i = 0; i < 20; i++) {
             videoIndexes.push(i);
         }
 
@@ -73,6 +74,7 @@
         });
 
         function getVideoIdFromPlaylist(playlistId, index) {
+            // Menggunakan ID video dari playlist berdasarkan urutan
             return playlistId.split(',')[index] || 'defaultVideoId';
         }
 
