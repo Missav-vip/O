@@ -16,17 +16,17 @@
         }
         .video-container {
             margin: 10px;
-            width: 30%; /* Membuat 3 video per baris */
+            width: 30%; /* 3 video per baris pada layar besar */
         }
         iframe {
             width: 100%;
-            height: 200px; /* Ukuran video lebih kecil agar bisa muat 3 per baris */
+            height: 200px; /* Ukuran video lebih kecil untuk layar kecil */
             border: none;
         }
 
         @media screen and (max-width: 600px) {
             .video-container {
-                width: 48%; /* Untuk layar kecil, 2 video per baris */
+                width: 48%; /* 2 video per baris pada layar kecil */
             }
             iframe {
                 height: 150px; /* Ukuran video lebih kecil untuk layar kecil */
@@ -47,7 +47,7 @@
         let videoIndexes = [];
 
         // Menambahkan video index untuk playlist
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 9999999; i++) {
             videoIndexes.push(i);
         }
 
@@ -70,9 +70,7 @@
 
         // Fungsi untuk mendapatkan ID video dari playlist berdasarkan index
         function getVideoIdFromPlaylist(playlistId, index) {
-            // Format video ID yang bisa Anda gunakan untuk memulai video tertentu dalam playlist
-            // Anda bisa menggunakan API YouTube Data v3 untuk mendapatkan daftar video dalam playlist
-            // Di sini, ID video hanya akan dihasilkan dari index dalam playlist
+            // Menggunakan API YouTube untuk mendapatkan daftar video dalam playlist
             return playlistId.split(',')[index] || 'defaultVideoId';
         }
     </script>
