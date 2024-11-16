@@ -6,30 +6,39 @@
     <title>Playlist Video YouTube</title>
     <style>
         body {
-            background-color: black;
+            background-color: black; /* Latar belakang hitam untuk tampilan yang lebih baik */
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            flex-wrap: wrap; /* Mengatur video agar tampil berbaris sesuai dengan lebar layar */
+            justify-content: space-around; /* Menyebar video secara merata */
             align-items: center;
             margin: 0;
             padding: 0;
         }
         .video-container {
-            margin: 10px;
-            width: 30%; /* 3 video per baris pada layar besar */
+            margin: 5px; /* Memberi jarak antar video */
+            width: 30%; /* Lebar video agar pas dengan 3 video per baris di layar besar */
         }
         iframe {
-            width: 100%;
-            height: 200px; /* Ukuran video lebih kecil untuk layar kecil */
+            width: 100%; /* Menyesuaikan lebar iframe agar memenuhi container */
+            height: 100px; /* Ukuran video 150x100px */
             border: none;
+            display: block; /* Menghilangkan jarak di bawah video */
         }
 
+        /* Responsif untuk layar lebih kecil */
         @media screen and (max-width: 600px) {
             .video-container {
-                width: 48%; /* 2 video per baris pada layar kecil */
+                width: 48%; /* Menampilkan 2 video per baris pada layar kecil */
             }
             iframe {
-                height: 150px; /* Ukuran video lebih kecil untuk layar kecil */
+                height: 100px; /* Ukuran video tetap kecil untuk layar kecil */
+            }
+        }
+
+        /* Untuk layar sangat kecil seperti ponsel */
+        @media screen and (max-width: 400px) {
+            .video-container {
+                width: 100%; /* Hanya 1 video per baris pada layar kecil sekali */
             }
         }
     </style>
@@ -47,7 +56,7 @@
         let videoIndexes = [];
 
         // Menambahkan video index untuk playlist
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 20; i++) {
             videoIndexes.push(i);
         }
 
@@ -60,7 +69,8 @@
             iframe.src = `https://www.youtube.com/embed/${getVideoIdFromPlaylist(playlistId, index)}?autoplay=1&loop=1&playlist=${playlistId}&mute=1&quality=small`; 
             iframe.setAttribute("allow", "autoplay; encrypted-media");
             iframe.setAttribute("allowfullscreen", true);
-            
+            iframe.setAttribute("loading", "lazy"); // Mengaktifkan lazy loading untuk video
+
             // Membungkus iframe dalam div untuk layout
             const videoContainer = document.createElement('div');
             videoContainer.classList.add('video-container');
@@ -71,6 +81,7 @@
         // Fungsi untuk mendapatkan ID video dari playlist berdasarkan index
         function getVideoIdFromPlaylist(playlistId, index) {
             // Menggunakan API YouTube untuk mendapatkan daftar video dalam playlist
+            // Anda bisa mengganti metode ini dengan API YouTube jika perlu
             return playlistId.split(',')[index] || 'defaultVideoId';
         }
     </script>
