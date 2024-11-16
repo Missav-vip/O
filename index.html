@@ -10,37 +10,30 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center;
             margin: 0;
             padding: 0;
         }
         .video-container {
             margin: 5px;
-            width: 30%;
+            flex: 1 1 calc(33.33% - 10px); /* 3 video per baris dengan jarak */
             box-sizing: border-box;
         }
         iframe {
             width: 100%;
-            height: 60px; /* Ukuran video 40x60 atau 30x50 disesuaikan dengan ukuran ini */
+            height: 60px; /* Ukuran video lebih kecil */
             border: none;
             display: block;
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 768px) {
             .video-container {
-                width: 48%;
-            }
-            iframe {
-                height: 50px; /* Menyesuaikan untuk perangkat lebih kecil */
+                flex: 1 1 calc(50% - 10px); /* 2 video per baris untuk tablet */
             }
         }
 
         @media screen and (max-width: 400px) {
             .video-container {
-                width: 100%;
-            }
-            iframe {
-                height: 40px; /* Menyesuaikan untuk layar sangat kecil */
+                flex: 1 1 100%; /* 1 video per baris untuk perangkat kecil */
             }
         }
     </style>
@@ -49,20 +42,13 @@
     <div id="videos-container"></div>
 
     <script>
-        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // ID Playlist Anda
+        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // Ganti dengan ID playlist Anda
         const container = document.getElementById('videos-container');
-        let videoIndexes = [];
 
-        // Menampilkan 20 video secara acak
+        // Menampilkan 20 video dari playlist secara acak
         for (let i = 0; i < 20; i++) {
-            videoIndexes.push(i);
-        }
-
-        videoIndexes = videoIndexes.sort(() => Math.random() - 0.5);
-
-        videoIndexes.forEach((index) => {
             const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${getVideoIdFromPlaylist(playlistId, index)}?autoplay=1&loop=1&playlist=${playlistId}&mute=1&quality=small`;
+            iframe.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&mute=1`; // Memutar playlist
             iframe.setAttribute("allow", "autoplay; encrypted-media");
             iframe.setAttribute("allowfullscreen", true);
             iframe.setAttribute("loading", "lazy");
@@ -71,21 +57,7 @@
             videoContainer.classList.add('video-container');
             videoContainer.appendChild(iframe);
             container.appendChild(videoContainer);
-        });
-
-        function getVideoIdFromPlaylist(playlistId, index) {
-            // Menggunakan ID video dari playlist berdasarkan urutan
-            return playlistId.split(',')[index] || 'defaultVideoId';
         }
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                const iframes = document.querySelectorAll('iframe');
-                iframes.forEach(iframe => {
-                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                });
-            }
-        });
     </script>
 </body>
 </html>
