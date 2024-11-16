@@ -9,34 +9,38 @@
             background-color: black;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             margin: 0;
             padding: 0;
         }
         .video-container {
             margin: 5px;
-            width: 30%; /* 3 video per baris pada layar besar */
+            width: 30%;
+            box-sizing: border-box;
         }
         iframe {
             width: 100%;
-            height: 100px; /* Ukuran video disesuaikan */
+            height: 60px;
             border: none;
             display: block;
         }
 
         @media screen and (max-width: 600px) {
             .video-container {
-                width: 48%; /* 2 video per baris pada layar kecil */
+                width: 48%;
             }
             iframe {
-                height: 100px;
+                height: 50px;
             }
         }
 
         @media screen and (max-width: 400px) {
             .video-container {
-                width: 100%; /* 1 video per baris pada layar sangat kecil */
+                width: 100%;
+            }
+            iframe {
+                height: 40px;
             }
         }
     </style>
@@ -45,13 +49,19 @@
     <div id="videos-container"></div>
 
     <script>
-        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // ID Playlist Anda
+        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0';
         const container = document.getElementById('videos-container');
+        let videoIndexes = [];
 
-        // Menampilkan 20 video dari playlist secara acak
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 200; i++) {
+            videoIndexes.push(i);
+        }
+
+        videoIndexes = videoIndexes.sort(() => Math.random() - 0.5);
+
+        videoIndexes.forEach((index) => {
             const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&mute=1`; // Memutar playlist
+            iframe.src = `https://www.youtube.com/embed/${getVideoIdFromPlaylist(playlistId, index)}?autoplay=1&loop=1&playlist=${playlistId}&mute=1&quality=small`;
             iframe.setAttribute("allow", "autoplay; encrypted-media");
             iframe.setAttribute("allowfullscreen", true);
             iframe.setAttribute("loading", "lazy");
@@ -60,7 +70,20 @@
             videoContainer.classList.add('video-container');
             videoContainer.appendChild(iframe);
             container.appendChild(videoContainer);
+        });
+
+        function getVideoIdFromPlaylist(playlistId, index) {
+            return playlistId.split(',')[index] || 'defaultVideoId';
         }
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                const iframes = document.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                });
+            }
+        });
     </script>
 </body>
 </html>
