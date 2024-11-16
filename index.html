@@ -1,66 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video YouTube</title>
-  <style>
-    /* Mengatur latar belakang hitam dan menghapus semua elemen lain */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: black; /* Latar belakang hitam */
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    /* Gaya untuk iframe video */
-    iframe {
-      margin: 10px;
-      width: 480px;
-      height: 270px;
-      border: none;
-      border-radius: 8px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Video YouTube</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        .video-container {
+            margin: 10px;
+        }
+        iframe {
+            width: 400px;
+            height: 400px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Kontainer untuk video -->
+    <div id="videos-container"></div>
 
-  <!-- Video YouTube 1 -->
-  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <script>
+        // Playlist YouTube ID
+        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // Ganti dengan ID playlist Anda
 
-  <!-- Video YouTube 2 -->
-  <iframe src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=1&loop=1&playlist=9bZkp7q19f0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        // Menampilkan 20 video dari playlist
+        const container = document.getElementById('videos-container');
 
-  <!-- Video YouTube 3 -->
-  <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ?autoplay=1&mute=1&loop=1&playlist=3JZ_D3ELwOQ" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 4 -->
-  <iframe src="https://www.youtube.com/embed/LsoLEjrDogU?autoplay=1&mute=1&loop=1&playlist=LsoLEjrDogU" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 5 -->
-  <iframe src="https://www.youtube.com/embed/QH2-TGUlwu4?autoplay=1&mute=1&loop=1&playlist=QH2-TGUlwu4" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 6 -->
-  <iframe src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&loop=1&playlist=oHg5SJYRHA0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 7 -->
-  <iframe src="https://www.youtube.com/embed/YPn0sBzA1xw?autoplay=1&mute=1&loop=1&playlist=YPn0sBzA1xw" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 8 -->
-  <iframe src="https://www.youtube.com/embed/NYlLY9MXok4?autoplay=1&mute=1&loop=1&playlist=NYlLY9MXok4" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 9 -->
-  <iframe src="https://www.youtube.com/embed/LfV9tu0aV00?autoplay=1&mute=1&loop=1&playlist=LfV9tu0aV00" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-  <!-- Video YouTube 10 -->
-  <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1&loop=1&playlist=tgbNymZ7vqY" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
+        // Membuat embed untuk playlist
+        for (let i = 0; i < 20; i++) {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&playlist=${playlistId}&mute=1`; // mute=1 untuk menonaktifkan suara
+            iframe.setAttribute("allow", "autoplay; encrypted-media");
+            iframe.setAttribute("allowfullscreen", true);
+            container.appendChild(iframe);
+        }
+    </script>
 </body>
 </html>
