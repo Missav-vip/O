@@ -6,83 +6,60 @@
     <title>Playlist Video YouTube</title>
     <style>
         body {
-            background-color: black; /* Latar belakang hitam untuk tampilan yang lebih baik */
+            background-color: black;
             display: flex;
-            flex-wrap: wrap; /* Mengatur video agar tampil berbaris sesuai dengan lebar layar */
-            justify-content: space-around; /* Menyebar video secara merata */
+            flex-wrap: wrap;
+            justify-content: space-around;
             align-items: center;
             margin: 0;
             padding: 0;
         }
         .video-container {
-            margin: 5px; /* Memberi jarak antar video */
-            width: 30%; /* Lebar video agar pas dengan 3 video per baris di layar besar */
+            margin: 5px;
+            width: 30%; /* 3 video per baris pada layar besar */
         }
         iframe {
-            width: 100%; /* Menyesuaikan lebar iframe agar memenuhi container */
-            height: 100px; /* Ukuran video 150x100px */
+            width: 100%;
+            height: 100px; /* Ukuran video disesuaikan */
             border: none;
-            display: block; /* Menghilangkan jarak di bawah video */
+            display: block;
         }
 
-        /* Responsif untuk layar lebih kecil */
         @media screen and (max-width: 600px) {
             .video-container {
-                width: 48%; /* Menampilkan 2 video per baris pada layar kecil */
+                width: 48%; /* 2 video per baris pada layar kecil */
             }
             iframe {
-                height: 100px; /* Ukuran video tetap kecil untuk layar kecil */
+                height: 100px;
             }
         }
 
-        /* Untuk layar sangat kecil seperti ponsel */
         @media screen and (max-width: 400px) {
             .video-container {
-                width: 100%; /* Hanya 1 video per baris pada layar kecil sekali */
+                width: 100%; /* 1 video per baris pada layar sangat kecil */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Kontainer untuk video -->
     <div id="videos-container"></div>
 
     <script>
-        // Playlist YouTube ID
-        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // Ganti dengan ID playlist Anda
-
-        // Menampilkan 20 video acak dari playlist
+        const playlistId = 'PLmeMnjLK2plF0KqeYKG7OjsA5FEGODMh0'; // ID Playlist Anda
         const container = document.getElementById('videos-container');
-        let videoIndexes = [];
 
-        // Menambahkan video index untuk playlist
+        // Menampilkan 20 video dari playlist secara acak
         for (let i = 0; i < 20; i++) {
-            videoIndexes.push(i);
-        }
-
-        // Mengacak urutan video
-        videoIndexes = videoIndexes.sort(() => Math.random() - 0.5);
-
-        // Membuat embed untuk playlist
-        videoIndexes.forEach((index) => {
             const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${getVideoIdFromPlaylist(playlistId, index)}?autoplay=1&loop=1&playlist=${playlistId}&mute=1&quality=small`; 
+            iframe.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&mute=1`; // Memutar playlist
             iframe.setAttribute("allow", "autoplay; encrypted-media");
             iframe.setAttribute("allowfullscreen", true);
-            iframe.setAttribute("loading", "lazy"); // Mengaktifkan lazy loading untuk video
+            iframe.setAttribute("loading", "lazy");
 
-            // Membungkus iframe dalam div untuk layout
             const videoContainer = document.createElement('div');
             videoContainer.classList.add('video-container');
             videoContainer.appendChild(iframe);
             container.appendChild(videoContainer);
-        });
-
-        // Fungsi untuk mendapatkan ID video dari playlist berdasarkan index
-        function getVideoIdFromPlaylist(playlistId, index) {
-            // Menggunakan API YouTube untuk mendapatkan daftar video dalam playlist
-            // Anda bisa mengganti metode ini dengan API YouTube jika perlu
-            return playlistId.split(',')[index] || 'defaultVideoId';
         }
     </script>
 </body>
